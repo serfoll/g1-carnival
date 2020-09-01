@@ -1,2 +1,2 @@
-# g1-carnival
+# VR Carnival Game
 Group 1 Carnival VR game
