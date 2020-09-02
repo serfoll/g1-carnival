@@ -28,8 +28,6 @@ public class FreeFallController : MonoBehaviour
         if ( slideUp && sit.transform.position.y < maxYPosition )
         {
 
-
-
             player.transform.position = sitBase.transform.position;
             player.transform.rotation = sitBase.transform.rotation;
             player.transform.parent = sitBase.transform;
@@ -37,7 +35,6 @@ public class FreeFallController : MonoBehaviour
             Vector3 destination = new Vector3 (sit.transform.position.x, maxYPosition, sit.transform.position.z);
 
             sit.transform.position = Vector3.MoveTowards (sit.transform.position, destination , 0.2f );
-
         }
 
 
@@ -47,18 +44,28 @@ public class FreeFallController : MonoBehaviour
             //sit.transform.position = new Vector3 ();
             slideUp = false;
             StartCoroutine (TheFall());
+
         }
     }
 
+    //Free fall timer 
     IEnumerator TheFall ()
     {
         Vector3 fallEase = new Vector3 (sit.transform.position.x , maxYPosition-50 , sit.transform.position.z);
-        yield return new WaitForSeconds (timeBeforeFall);
+        Vector3 smallRotation = new Vector3 (45f, -180f, sitBase.transform.rotation.z);
+
+        //rotate angle 
+        if ( sitBase.transform.rotation.x < 1 )
+        {
+            //player.transform.Rotate (smallRotation , Space.Self);
+            sitBase.transform.eulerAngles = smallRotation;
+        }
+        yield return new WaitForSeconds (timeBeforeFall-2);
         Debug.Log ("fall");
-        sit.transform.position = Vector3.MoveTowards (sit.transform.position , fallEase , 1f);
-        yield return new WaitForSeconds (timeBeforeFall);
+        sit.transform.position = Vector3.MoveTowards (sit.transform.position , fallEase , 0.8f);
+        yield return new WaitForSeconds (timeBeforeFall-2);
         Vector3 fallDestination = new Vector3 (sit.transform.position.x , 0 , sit.transform.position.z);
-        sit.transform.position = Vector3.MoveTowards (sit.transform.position , fallDestination , 2f);
+        sit.transform.position = Vector3.MoveTowards (sit.transform.position , fallDestination , 1f);
     }
 
 
