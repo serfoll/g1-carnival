@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - spawnZone
+  - TenPoints
+  - OnePoint
+  - Ball
   layers:
   - Default
   - TransparentFX

@@ -38,7 +38,7 @@ public class LeverEventActivation : MonoBehaviour
         {
             if (hingeJointState != HingeJointState.Min)
                 OnMinLimitReached.Invoke();
-
+        
             hingeJointState = HingeJointState.Min;
         }
         //Reached Max
