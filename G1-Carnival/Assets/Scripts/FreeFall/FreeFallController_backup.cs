@@ -1,18 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.XR.Interaction.Toolkit;
 
-public class FreeFallController : MonoBehaviour
+public class FreeFallController_backup : MonoBehaviour
 {
-    [SerializeField]
-    private GameObject seatSupport;
-    //define a list of the free fall seats4
     [SerializeField]
     List<FreeFallSeat> freeFallSeats = new List<FreeFallSeat> ();
 
     private GameObject seatBase;
     private GameObject currentSeat;
     private GameObject player;
+    [SerializeField]
+    private GameObject seatSupport;
+    [SerializeField]
+    private float maxYPosition;
 
     [SerializeField]
     private AudioSource audioSource;
@@ -22,17 +24,20 @@ public class FreeFallController : MonoBehaviour
     private Animator animator;
 
     [SerializeField]
-    private float maxYPosition;
-    [SerializeField]
     private float timeBeforeFall = 2f;
     [SerializeField]
-    private float upSpeed = 10f;
+    float upSpeed = 10f;
     [SerializeField]
-    private float fallSpeed = 150f;
+    float fallSpeed = 150f;
+
+    public string seatName { get; set; }
 
     private GameObject poleHolder, poleHolderLastChild;
+
     private bool weUp = false;
+
     public bool slideUp { get; set; } = false;
+
     public bool guardUp = false;
 
     void Awake ()
@@ -59,16 +64,10 @@ public class FreeFallController : MonoBehaviour
             //Debug.Log (maxYPosition);
         }
 
-        if ( guardUp || !guardUp)
-        {
-            animator.SetBool ("guardUp" , guardUp);
-
-        }
-
     }
 
     // Update is called once per frame
-    void Update ()
+    void Update()
     {
 
         if ( slideUp && seatSupport.transform.position.y < maxYPosition )
@@ -81,25 +80,28 @@ public class FreeFallController : MonoBehaviour
 
         else if ( !slideUp && weUp )
         {
-            StopCoroutine (SlideUP ());
+            StopCoroutine (SlideUP());
             //Debug.Log ("Get Ready");
             if ( audioSource.isPlaying )
             {
                 audioSource.Stop ();
             }
-            StartCoroutine (TheFall ());
+            StartCoroutine (TheFall());
+            //Debug.Log ("Sit y: " + seatSupport.transform.position.y + "\n Max y: " + maxYPosition);
         }
     }
 
     IEnumerator SlideUP ()
     {
         guardUp = true;
+        animator.SetBool ("guardUp", guardUp);
         yield return new WaitForSeconds (2f);
         player.transform.position = seatBase.transform.position;
         player.transform.rotation = seatBase.transform.rotation;
         player.transform.parent = seatBase.transform;
         yield return new WaitForSeconds (1f);
         guardUp = false;
+        animator.SetBool ("guardUp" , guardUp);
 
         yield return new WaitForSeconds (1f);
 
@@ -107,7 +109,7 @@ public class FreeFallController : MonoBehaviour
         if ( !audioSource.isPlaying )
         {
             audioSource.clip = chainClip;
-            audioSource.Play ();
+            audioSource.Play();
         }
 
         yield return new WaitForSeconds (1f);
@@ -115,25 +117,29 @@ public class FreeFallController : MonoBehaviour
         seatSupport.transform.position = Vector3.MoveTowards (seatSupport.transform.position ,
             _upDestination , _upStep);
 
-        if ( Vector3.Distance (seatSupport.transform.position ,
-            _upDestination) < 0.001f )
+        //Debug.Log (_upDestination);
+
+        if ( Vector3.Distance(seatSupport.transform.position,
+            _upDestination ) < 0.001f )
         {
+            //Debug.Log ("Seat y: " + seatSupport.transform.position.y + "\n Max y: " + destination*step);
 
             slideUp = false;
             weUp = true;
 
+            //Debug.Log ("SlideUp: " + slideUp + "\n WeUp: " + weUp);
         }
     }//end Slide up
-
 
     //Free fall timer 
     IEnumerator TheFall ()
     {
-
-        if ( currentSeat.transform.rotation.x >= 0 ||
+ 
+        if ( currentSeat.transform.rotation.x >= 0 || 
             currentSeat.transform.rotation.z >= 0 )
         {
             animator.SetBool ("sitTilt" , true);
+            //animator.SetBool ("tiltBackward" , false);
             if ( !audioSource.isPlaying )
                 audioSource.PlayOneShot (chainClip);
         }
@@ -141,7 +147,7 @@ public class FreeFallController : MonoBehaviour
 
 
         float _fallStep = fallSpeed * Time.deltaTime;
-        Vector3 _fallDestination = new Vector3 (seatSupport.transform.position.x , 0.2f , seatSupport.transform.position.z);
+        Vector3 _fallDestination = new Vector3 (seatSupport.transform.position.x , 1f , seatSupport.transform.position.z);
 
         yield return new WaitForSeconds (timeBeforeFall);
         if ( audioSource.isPlaying )
@@ -150,55 +156,32 @@ public class FreeFallController : MonoBehaviour
         }
 
         seatSupport.transform.position = Vector3.MoveTowards (
-            seatSupport.transform.position ,
+            seatSupport.transform.position , 
             _fallDestination , _fallStep);
-
-        if ( Vector3.Distance (seatSupport.transform.position , _fallDestination) < 20f )
+      
+        if ( Vector3.Distance(seatSupport.transform.position , _fallDestination) < 20f )
         {
             animator.SetBool ("sitTilt" , false);
+            Debug.Log (seatSupport.transform.position);
             weUp = false;
         }
-
+        
         if ( Vector3.Distance (seatSupport.transform.position , _fallDestination) < 0.001f )
         {
-            yield return new WaitForSeconds (0.5f);
-            guardUp = true;
             player.transform.parent = null;
-            GameObject _playerReturnArea = GameObject.FindGameObjectWithTag ("PlayerReturnArea");
-            yield return new WaitForSeconds (1.5f);
-            player.transform.position = Vector3.MoveTowards (
-                player.transform.position , 
-                _playerReturnArea.transform.position , 
-                10f * Time.deltaTime);
-
-            player.transform.rotation = _playerReturnArea.transform.rotation;
-
-            guardUp = false;
         }
 
-    }//End the fall
+        //if ( !weUp )
+        //{
+        //    _fallDestination = new Vector3 (_fallDestination.x , 0 , _fallDestination.z);
+        //    yield return new WaitForSeconds (1f);
 
+        //    seatSupport.transform.position = Vector3.MoveTowards (
+        //        seatSupport.transform.position ,
+        //        _fallDestination , 2f * Time.deltaTime);
 
-    //Get currentSeat and seatBase GameObjects by looping through the freeFallSeats List
-    public void GetSeat (string _seatName)
-    {
-        if ( seatBase == null )
-        {
-            for ( int i = 0; i < freeFallSeats.Count; i++ )
-            {
-                if ( freeFallSeats[ i ].seatName == _seatName )
-                {
-                    Debug.Log (_seatName);
-                    seatBase = freeFallSeats[ i ].seatBase;
-                    currentSeat = freeFallSeats[ i ].seat;
-                    break;//Stop loop after seat is found
-                }
-            }
-        }
-
-
-        Debug.Log (seatBase.name + "\n " + currentSeat.name);
-        //seatBase.transform.parent.gameObject.SetActive (false);
+            
+        //}
     }
 
 }
