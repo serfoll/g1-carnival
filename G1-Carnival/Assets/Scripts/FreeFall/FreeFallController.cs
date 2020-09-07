@@ -71,11 +71,8 @@ public class FreeFallController : MonoBehaviour
     void Update ()
     {
 
-        if ( slideUp && seatSupport.transform.position.y < maxYPosition )
+        if ( slideUp && seatSupport.transform.position.y < maxYPosition)
         {
-
-            slideUp = true;
-
             StartCoroutine (SlideUP ());
         }
 
@@ -130,6 +127,7 @@ public class FreeFallController : MonoBehaviour
     IEnumerator TheFall ()
     {
 
+        //Tilt seat forward
         if ( currentSeat.transform.rotation.x >= 0 ||
             currentSeat.transform.rotation.z >= 0 )
         {
@@ -138,8 +136,7 @@ public class FreeFallController : MonoBehaviour
                 audioSource.PlayOneShot (chainClip);
         }
 
-
-
+        //Start the falling process
         float _fallStep = fallSpeed * Time.deltaTime;
         Vector3 _fallDestination = new Vector3 (seatSupport.transform.position.x , 0.2f , seatSupport.transform.position.z);
 
@@ -153,27 +150,36 @@ public class FreeFallController : MonoBehaviour
             seatSupport.transform.position ,
             _fallDestination , _fallStep);
 
+        //Tilt seat backward
         if ( Vector3.Distance (seatSupport.transform.position , _fallDestination) < 20f )
         {
+
             animator.SetBool ("sitTilt" , false);
-            weUp = false;
+            yield return new WaitForSeconds (2f);
+
         }
 
         if ( Vector3.Distance (seatSupport.transform.position , _fallDestination) < 0.001f )
         {
-            yield return new WaitForSeconds (0.5f);
             guardUp = true;
-            player.transform.parent = null;
             GameObject _playerReturnArea = GameObject.FindGameObjectWithTag ("PlayerReturnArea");
+           
             yield return new WaitForSeconds (1.5f);
-            player.transform.position = Vector3.MoveTowards (
-                player.transform.position , 
-                _playerReturnArea.transform.position , 
-                10f * Time.deltaTime);
 
-            player.transform.rotation = _playerReturnArea.transform.rotation;
-
+            //reset player position
+            if ( seatBase != null )
+            {
+                player.transform.position = _playerReturnArea.transform.position;
+                player.transform.rotation = _playerReturnArea.transform.rotation;
+            }
+            
+            //Reset the ride
             guardUp = false;
+            seatBase = null;
+            currentSeat = null;
+            player.transform.parent = null;
+            weUp = false;
+
         }
 
     }//End the fall
@@ -196,8 +202,12 @@ public class FreeFallController : MonoBehaviour
             }
         }
 
+        if ( seatBase != null )
+        {
+            slideUp = true;
+            Debug.Log (seatBase.name + "\n " + currentSeat.name);
 
-        Debug.Log (seatBase.name + "\n " + currentSeat.name);
+        }
         //seatBase.transform.parent.gameObject.SetActive (false);
     }
 
