@@ -206,7 +206,6 @@ public class FreeFallController : MonoBehaviour
         {
             slideUp = true;
             Debug.Log (seatBase.name + "\n " + currentSeat.name);
-
         }
         //seatBase.transform.parent.gameObject.SetActive (false);
     }
