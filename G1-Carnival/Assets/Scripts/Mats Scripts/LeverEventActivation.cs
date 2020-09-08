@@ -5,24 +5,16 @@ using UnityEngine.Events;
 
 public class LeverEventActivation : MonoBehaviour
 {
-
-
-    //"HingeJointListener"
-
     //angle threshold to trigger if we reached limit
-    public float angleBetweenThreshold = 1f;
-    //State of the hinge joint : either reached min or max or none if in between
-    public HingeJointState hingeJointState = HingeJointState.None;
-
-    //Event called on min reached
-    public UnityEvent OnMinLimitReached;
+    public float hingeLimit = 1f;   
     //Event called on max reached
-    public UnityEvent OnMaxLimitReached;
+    public UnityEvent MaxLimitReached;
 
-    public enum HingeJointState { Min, Max, None }
     private HingeJoint hinge;
 
-    // Start is called before the first frame update
+    private bool activeMethod = false;
+
+
     void Start()
     {
         hinge = GetComponent<HingeJoint>();
@@ -30,29 +22,21 @@ public class LeverEventActivation : MonoBehaviour
 
     private void FixedUpdate()
     {
-        float angleWithMinLimit = Mathf.Abs(hinge.angle - hinge.limits.min);
-        float angleWithMaxLimit = Mathf.Abs(hinge.angle - hinge.limits.max);
-
-        //Reached Min
-        if (angleWithMinLimit < angleBetweenThreshold)
-        {
-            if (hingeJointState != HingeJointState.Min)
-                OnMinLimitReached.Invoke();
+        float maxLimit = Mathf.Abs(hinge.angle - hinge.limits.max);        
         
-            hingeJointState = HingeJointState.Min;
-        }
         //Reached Max
-        else if (angleWithMaxLimit < angleBetweenThreshold)
+        if (maxLimit < hingeLimit)
         {
-            if (hingeJointState != HingeJointState.Max)
-                OnMaxLimitReached.Invoke();
-
-            hingeJointState = HingeJointState.Max;
+            // To avoid spawning a mountain of balls.
+            if (activeMethod != true)
+            {
+                MaxLimitReached.Invoke();
+                activeMethod = true;
+            }            
         }
-        //No Limit reached
         else
         {
-            hingeJointState = HingeJointState.None;
+            activeMethod = false;
         }
     }
 }

@@ -13,7 +13,7 @@ public class BallSpawner : MonoBehaviour
         if (leverActive)
         {
             Instantiate(ballPrefab, transform);
-            leverActive = false;
+            leverActive = false;            
         }
     }
 }

@@ -8,6 +8,9 @@ public class BallTossPoints : MonoBehaviour
     public int ballPoints;
     public Text ballScore;
 
+    public AudioClip scorePoint;
+    public AudioSource audioSource;
+
     private void Update()
     {
         ballScore.text = ballPoints.ToString();
@@ -17,7 +20,8 @@ public class BallTossPoints : MonoBehaviour
     {
         if (other.tag == "Ball")
         {
-            ballPoints += 10;
+            ballPoints += 1;
+            audioSource.PlayOneShot(scorePoint);
         }
     }
 }
