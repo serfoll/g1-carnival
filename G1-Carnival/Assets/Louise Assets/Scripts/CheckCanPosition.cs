@@ -4,23 +4,34 @@ using UnityEngine;
 
 public class CheckCanPosition : MonoBehaviour
 {
-    public GameObject Shelf;
-    public WinGame winGame;
-    // Start is called before the first frame update
-    void Start()
+
+    public GameObject youWinText;
+    private GameObject[] cans;
+    public int cansDown;
+
+    private void Start ()
     {
-        
+        youWinText.SetActive (false);
+        cans = GameObject.FindGameObjectsWithTag ("Can");
+        Debug.Log ("Cans: " + cans.Length);
     }
 
-    // Update is called once per frame
-    void Update()
+    void Update ()
     {
-        if (transform.position.y<Shelf.transform.position.y)
+        Debug.Log (cansDown);
+        if ( cansDown == cans.Length )
         {
-            Debug.Log(gameObject.name);
-            winGame.cansLeft--;
-
+            youWinText.SetActive (true);
         }
-        
     }
+
+    private void OnTriggerEnter (Collider other)
+    {
+        if ( other.CompareTag ("Can") )
+        {
+            cansDown++;
+        }
+    }
+
+
 }

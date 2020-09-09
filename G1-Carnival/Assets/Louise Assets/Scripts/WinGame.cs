@@ -4,41 +4,22 @@ using UnityEngine;
 
 public class WinGame : MonoBehaviour
 {
- 
-    
+
     public GameObject YouWinText;
     public GameObject[] cans;
-    public int cansLeft; 
+    public GameObject shelf;
+    public int cansLeft;
 
-   
-    void Start()
+
+    void Start ()
     {
-        cans=GameObject.FindGameObjectsWithTag("Can");
-        
+        cans = GameObject.FindGameObjectsWithTag ("Can");
         cansLeft = cans.Length;
-        
     }
 
-    void Update()
+    void Update ()
     {
-        Debug.Log(cansLeft);
-        if(cansLeft<=0)
-        {
-            YouWinText.SetActive (true);
-
-        }
-
     }
-    
-        //  public void Win () 
-         
-        //  {
-        //  if (Can.transform.position.y < Shelf.transform.position.y)
-        //  {
-        //      YouWinText.SetActive (true);
-             
-        //  }
-        //  }
-        
-    
+
+
 }
