@@ -12,6 +12,15 @@ TagManager:
   - Card3
   - Card4
   - CardHolder
+  - Can
+  - Shelf
+  - GameManager
+  - WinGame
+  - Ball
+  - Hammer
+  - Clown
+  - Target
+  - FreeFall
   layers:
   - Default
   - TransparentFX
