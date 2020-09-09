@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class BallTossPoints : MonoBehaviour
 {
+    // Adds point to UI and plays a soundclip when ball is tossed through collider.
+
     public int ballPoints;
     public Text ballScore;
 

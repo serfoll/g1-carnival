@@ -5,7 +5,7 @@ using UnityEngine.Events;
 
 public class LeverEventActivation : MonoBehaviour
 {
-    //angle threshold to trigger if we reached limit
+    //Angle limit to trigger if we reached limit
     public float hingeLimit = 1f;   
     //Event called on max reached
     public UnityEvent MaxLimitReached;
