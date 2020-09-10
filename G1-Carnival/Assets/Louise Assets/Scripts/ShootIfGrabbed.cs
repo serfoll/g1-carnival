@@ -14,9 +14,9 @@ public class ShootIfGrabbed : MonoBehaviour
 
         public void Fire()
         {
-            GameObject spawnedBullet = Instantiate(bullet, barrel.position, barrel.rotation);
-            spawnedBullet.GetComponent<Rigidbody>().velocity = speed * barrel.forward;
-            audioSource.PlayOneShot(audioClip);
+            GameObject spawnedBullet = Instantiate(bullet, barrel.position, barrel.rotation); //Instantierar ny kula
+            spawnedBullet.GetComponent<Rigidbody>().velocity = speed * barrel.forward; //Sätter kulans riktning åt samma håll som barrel
+            audioSource.PlayOneShot(audioClip); //Ljud spelas vid skott
             Destroy(spawnedBullet, 2);
         }
 
