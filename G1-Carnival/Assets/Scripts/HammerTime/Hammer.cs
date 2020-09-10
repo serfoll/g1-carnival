@@ -20,7 +20,7 @@ public class Hammer : MonoBehaviour
     {
         if (other.CompareTag("Clown") == true)
         {
-            // increase score
+            //call increase score
             scoreManager.IncrementScore();
             // play audio
             GameObject.Find("AudioManager").GetComponent<Sound>().audioSource.PlayOneShot(hit);

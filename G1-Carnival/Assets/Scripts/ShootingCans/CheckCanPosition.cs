@@ -30,6 +30,7 @@ public class CheckCanPosition : MonoBehaviour
         if ( other.CompareTag ("Can") )
         {
             cansDown++; //Öka värdet med 1
+            Destroy (other.gameObject , 0.5f);
         }
     }
 
