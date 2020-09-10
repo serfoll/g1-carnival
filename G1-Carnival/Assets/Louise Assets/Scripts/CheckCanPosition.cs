@@ -6,30 +6,30 @@ public class CheckCanPosition : MonoBehaviour
 {
 
     public GameObject youWinText;
-    private GameObject[] cans;
-    public int cansDown;
+    private GameObject[] cans; //Lista med alla cans
+    public int cansDown; 
 
     private void Start ()
     {
-        youWinText.SetActive (false);
-        cans = GameObject.FindGameObjectsWithTag ("Can");
+        youWinText.SetActive (false); 
+        cans = GameObject.FindGameObjectsWithTag ("Can"); //Lägg till alla GameObject med tag Can i listan cans
         Debug.Log ("Cans: " + cans.Length);
     }
 
     void Update ()
     {
         Debug.Log (cansDown);
-        if ( cansDown == cans.Length )
+        if ( cansDown == cans.Length ) //Om alla cans som är i triggerzonen matchar antal cans i lista visas You Win-Texten
         {
             youWinText.SetActive (true);
         }
     }
 
-    private void OnTriggerEnter (Collider other)
+    private void OnTriggerEnter (Collider other) //Räknar cans när de kolliderar med triggerZon
     {
         if ( other.CompareTag ("Can") )
         {
-            cansDown++;
+            cansDown++; //Öka värdet med 1
         }
     }
 
