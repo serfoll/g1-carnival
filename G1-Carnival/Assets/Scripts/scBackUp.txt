@@ -1,0 +1,93 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class CheckCanPosition : MonoBehaviour
+{
+    public GameObject Shelf;
+    public WinGame winGame;
+    // Start is called before the first frame update
+    private bool canDown;
+    void Start()
+    {
+        //Debug.Log (gameObject.name + "\n Y pos: " + transform.localPosition.y );
+    }
+
+    // Update is called once per frame
+    void FixedUpdate()
+    {
+        if ( canDown )
+        {
+            Debug.Log ("CanDown" + "\n positin: " + transform.localPosition.y);
+        }
+    }
+
+    private void OnTriggerEnter (Collider other)
+    {
+        if ( other.CompareTag("Bullet") )
+        {
+            canDown = true;
+            Debug.Log (other.name) ;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class WinGame : MonoBehaviour
+{
+ 
+    
+    public GameObject YouWinText;
+    public GameObject[] cans;
+    public int cansLeft; 
+
+   
+    void Start()
+    {
+        cans=GameObject.FindGameObjectsWithTag("Can");
+        
+        cansLeft = cans.Length;
+        
+    }
+
+    void Update()
+    {
+        Debug.Log(cansLeft);
+
+        if(cansLeft<=0)
+        {
+            YouWinText.SetActive (true);
+
+        }
+
+    }
+    
+        //  public void Win () 
+         
+        //  {
+        //  if (Can.transform.position.y < Shelf.transform.position.y)
+        //  {
+        //      YouWinText.SetActive (true);
+             
+        //  }
+        //  }
+        
+    
+}

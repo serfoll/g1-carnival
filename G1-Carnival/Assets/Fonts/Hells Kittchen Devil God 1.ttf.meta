@@ -1,0 +1,22 @@
+fileFormatVersion: 2
+guid: 1dc5a7125ab6c2c4ba944b6872f44b95
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+  - Hells Kittchen Devil God
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: a7726d9c8428489458db9e8d02d53d41, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
