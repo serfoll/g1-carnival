@@ -7,7 +7,10 @@ public class QuitHandControl : MonoBehaviour
     // Quits the game
     public void QuitTheGame()
     {
-        Debug.Log("quitting");
-        Application.Quit();
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit ();
+#endif
     }
 }
