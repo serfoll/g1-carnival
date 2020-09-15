@@ -73,7 +73,7 @@ public class FreeFallController : MonoBehaviour
          */
         if ( maxYPosition <= poleHolderLastChild.transform.position.y )
         {
-            maxYPosition = poleHolderLastChild.transform.position.y -2f;
+            maxYPosition = poleHolderLastChild.transform.position.y - 0.5f;
         }
 
         if ( !slideUp && weUp )

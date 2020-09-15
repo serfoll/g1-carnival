@@ -3,12 +3,42 @@ guid: 33e7164deb1ceb543802aa45862ff912
 ModelImporter:
   serializedVersion: 20101
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Default_Material
+    second: {fileID: 2100000, guid: cde0bc0ade29b884faf72af9d18f0e4d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FreeFallBlue
+    second: {fileID: 2100000, guid: 5d16f7a8003aae54a9c51a44172cb0cb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FreeFallRed
+    second: {fileID: 2100000, guid: 4501cadfc3d82864cbfd1b7720d88505, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FreeFallSitBlack
+    second: {fileID: 2100000, guid: 547eed2d9bcce0b408c0a27d9c98a553, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FreeFallSitGreen
+    second: {fileID: 2100000, guid: 9279c7ec19921dc42a81daaa2c477ca8, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: FreeFallSitGuardSilver
+    second: {fileID: 2100000, guid: 5a34c074f4e08904eb10e53a36d6c310, type: 2}
   materials:
     materialImportMode: 1
-    materialName: 0
+    materialName: 2
     materialSearch: 1
-    materialLocation: 1
+    materialLocation: 0
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0

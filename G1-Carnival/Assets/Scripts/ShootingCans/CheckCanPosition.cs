@@ -13,12 +13,12 @@ public class CheckCanPosition : MonoBehaviour
     {
         youWinText.SetActive (false); 
         cans = GameObject.FindGameObjectsWithTag ("Can"); //Lägg till alla GameObject med tag Can i listan cans
-        Debug.Log ("Cans: " + cans.Length);
+        //Debug.Log ("Cans: " + cans.Length);
     }
 
     void Update ()
     {
-        Debug.Log (cansDown);
+        //Debug.Log (cansDown);
         if ( cansDown == cans.Length ) //Om alla cans som är i triggerzonen matchar antal cans i lista visas You Win-Texten
         {
             youWinText.SetActive (true);

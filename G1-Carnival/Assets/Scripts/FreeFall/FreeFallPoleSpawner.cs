@@ -16,16 +16,19 @@ public class FreeFallPoleSpawner : MonoBehaviour
     private Vector3 spawnOrigin;
     private Vector3 spawnPosition;
     private GameObject poleHolder;
-
+    private Transform freefallTransform;
 
     
 
 
     private void Start ()
     {
+        freefallTransform = GameObject.FindGameObjectWithTag ("FreeFall").transform;
         poleHolder = new GameObject ();
         poleHolder.name = "PoleHolder";
         poleHolder.tag = "PoleHolder";
+
+        spawnOrigin = new Vector3 (freefallTransform.position.x, spawnOrigin.y, freefallTransform.position.z);
 
         //Instantiate poles based on the nrOfPolesToSpawn
         for ( int i = 0; i < nrOfPolesToSpawn; i++ )
@@ -34,13 +37,13 @@ public class FreeFallPoleSpawner : MonoBehaviour
             if ( i == 0 )
                 spawnPosition = new Vector2 (0,startPosition);
             else
-                spawnPosition = spawnPosition + new Vector3 (0 , spawnOrigin.y, 0);
+                spawnPosition = spawnPosition + new Vector3 (0 , spawnOrigin.y+ 11.72f, 0);
 
             //Instantiate the pole prefab, give it a name position and parant
             GameObject _polePrefab = GameObject.Instantiate (polePrefab ,
             spawnOrigin + spawnPosition, Quaternion.identity);
 
-            _polePrefab.name = "Pole_" + spawnPosition.y;
+            _polePrefab.name = "Pole_" + _polePrefab.transform.position.y;
             _polePrefab.transform.parent = poleHolder.transform;
         }
 
